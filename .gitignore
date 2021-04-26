@@ -1,0 +1,20 @@
+#ignore all files
+/*
+
+#except config files
+!.gitignore
+!.gitmodules
+!alacritty
+!fish
+!gtk-3.0
+!nvim
+!omf
+!qtile
+!ranger
+!rofi
+!themes
+!Thunar
+!.bashrc
+!.xsession
+
+
