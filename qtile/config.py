@@ -5,12 +5,7 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
-#from os import path
-#import subprocess
-
-#def autostart():
-#    subprocess.call([path.join(path.expanduser(~), '.config','qtile','autostart.sh')])
-
+import random
 
 
 mod = "mod4"
@@ -55,7 +50,7 @@ keys = [
 
     #window
     Key([mod], "s", lazy.spawn("scrot")),
-    Key([mod,"shift"], "s", lazy.spawn("scrot -s")),
+    Key([mod,"shift"], "s", lazy.spawn("flameshot")),
     Key([mod], "f", lazy.spawn("thunar")),
 ]
 
@@ -70,7 +65,9 @@ for i, group in enumerate(groups):
         Key([mod, "shift"], actual_key, lazy.window.togroup(group.name))
     ])
 
-
+def text():
+    lista=['1','2','3','4','5','6','7','8','9']
+    return random.choice(lista)
 
 layout_conf = {
     'border_focus':'#00c0d9',
@@ -202,7 +199,7 @@ screens = [
                 ),
                 widget.TextBox(
                     text='',
-                    background=['#F07178',"#F07178"],
+                    background=['#F07178',"#F07178"],#b6f81c
                     foreground=['#a151d3',"#a151d3"],
                     fontsize=39,
                     padding=-3
@@ -278,23 +275,87 @@ screens = [
                     foreground=['#FF5555','#FF5555'],
                     font='UbuntuMono Nerd Font',
                 ),
-
+                widget.TextBox(
+                    text='|',
+                    background=["#1e2127","#1e2127"],
+                    foreground=["#1c82f8","#1c82f8"],
+                    fontsize=43,
+                    padding=-3
+                ),
+                widget.Clipboard(
+                    fmt='{}',
+                    max_width=25,
+                    background=["#a653a6","#a653a6"],
+                    foreground=["#1e2127","#1e2127"],
+                    font='UbuntuMono Nerd Font',
+                    fontsize= 18,
+                    timeout= 40,
+                    #max_chars=20
+                ),
+                widget.TextBox(
+                    text='|',
+                    background=["#1e2127","#1e2127"],
+                    foreground=["#1c82f8","#1c82f8"],
+                    fontsize=43,
+                    padding=-3
+                ),
                 widget.TextBox(
                     text='',
                     background=["#1e2127","#1e2127"],
-                    foreground=['#F07178',"#F07178"],
+                    foreground=["#1c82f8","#1c82f8"],
+                    fontsize=43,
+                    padding=-3
+                ),
+                widget.TextBox(
+                    text='  ',
+                    foreground=["#1e2127","#1e2127"],
+                    background=["#1c82f8","#1c82f8"],
+                    fontsize=27,
+                    padding=-3
+                ),
+                widget.CPU(
+                    background=["#1c82f8","#1c82f8"],
+                    foreground=['#0f101a',"#0f101a"],
+                    font='UbuntuMono Nerd Font',
+                    fmt='{}',
+                ),
+
+                widget.TextBox(
+                    text='',
+                    background=["#1c82f8","#1c82f8"],
+                    foreground=['#1cf8b9',"#1cf8b9"],
+                    fontsize=43,
+                    padding=-3
+                ),
+                widget.TextBox(
+                    text='  ',
+                    foreground=["#1e2127","#1e2127"],
+                    background=['#1cf8b9',"#1cf8b9"],
+                    fontsize=20,
+                    padding=-3
+                ),
+                widget.Memory(
+                    background=['#1cf8b9',"#1cf8b9"],
+                    foreground=['#0f101a',"#0f101a"],
+                    font='UbuntuMono Nerd Font',
+                ),
+                
+                widget.TextBox(
+                    text='',
+                    background=["#1cf8b9","#1cf8b9"],
+                    foreground=['#b6f81c','#b6f81c'],
                     fontsize=43,
                     padding=-3
                 ),
 
                 widget.CurrentLayoutIcon(
-                    background=['#F07178',"#F07178"],
+                    background=['#b6f81c','#b6f81c'],
                     foreground=['#cbacff',"#eeffff"],
                     font='UbuntuMono Nerd Font',
                     scale=0.65
                 ),
                 widget.CurrentLayout(
-                    background=['#F07178',"#F07178"],
+                    background=['#b6f81c','#b6f81c'],
                     foreground=['#0f101a',"#0f101a"],
                     font='UbuntuMono Nerd Font',
                     padding=10
@@ -302,7 +363,7 @@ screens = [
                 widget.TextBox(
                     text='',
                     foreground=['#1e2127',"#1e2127"],
-                    background=['#F07178',"#F07178"],
+                    background=['#b6f81c','#b6f81c'],
                     fontsize=36,
                     padding=-3
                 ),
