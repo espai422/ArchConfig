@@ -9,6 +9,7 @@ alias tree "exa -T"
 alias Writer "/usr/bin/libreoffice --writer" &
 alias Calc "/usr/bin/libreoffice --calc" &
 alias 100%hacker "neofetch" &
+alias pycritty "//home/espai422/.config/alacritty/pycritty.py"
 
 # Agnoste
 

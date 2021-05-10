@@ -129,8 +129,8 @@ screens = [
                     #foreground=['#a151d3','#a151d3'],
                     foreground=['#FF5555','#FF5555'],
                     font='UbuntuMono Nerd Font',
-
                 ),
+
                 widget.TextBox(
                     text='',
                     background=['#1e2127','#1e2127'],
