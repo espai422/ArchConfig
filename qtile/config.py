@@ -1,12 +1,25 @@
+#!/bin/pyhton
 from typing import List  # noqa: F401
 
 from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
-
+import subprocess
+from time import sleep, time
 import random
+import Mywidget
+##### My imports #####
 
+
+background = ["#1e2127","#1e2127"]
+foreground = ['#D4E6DA','#D4E6DA']
+
+
+try:
+    subprocess.run('/home/espai422/.config/qtile/autostart.sh')
+except:
+    pass
 
 mod = "mod4"
 terminal = guess_terminal()
@@ -54,7 +67,7 @@ keys = [
     Key([mod], "f", lazy.spawn("thunar")),
 ]
 
-groups = [Group(i) for i in ["   ","   ", "   ", "   ", "   ", "   ", "   ", "   ", "   "]]
+groups = [Group(i) for i in [" "," "," ", " ","", "שּׁ ", " "," "]]
 
 for i, group in enumerate(groups):
     actual_key = str(i + 1)
@@ -65,20 +78,20 @@ for i, group in enumerate(groups):
         Key([mod, "shift"], actual_key, lazy.window.togroup(group.name))
     ])
 
-def text():
-    lista=['1','2','3','4','5','6','7','8','9']
-    return random.choice(lista)
 
 layout_conf = {
-    'border_focus':'#00c0d9',
+    'border_focus':'#666666',
     'border_width':1,
-    'margin':10
+    'margin':6
 }
 layout_conf2 = {
     'border_focus':'#00c0d9',
     'border_width':1,
     'margin':4
 }
+
+def prueba():
+    return str(random.randrange(300))
 
 layouts = [
     #layout.Columns(**layout_conf,border_focus_stack='#d75f5f'),
@@ -103,276 +116,210 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
+widgets = [
+
+
+],
+
 screens = [
     Screen(
-        top=bar.Bar(
-            [
-                widget.GroupBox(
-                    background=["#1e2127","#1e2127"],
-                    foreground=["#ffffff","#ffffff"],
-                    font='UbuntuMono Nerd Font',
-                    fontsize=19,
-                    active=["ccffff","ffffcc"],
-                    inactive=["#555555","#555555"],
-                    rounded=False,
-                    highlight_method='block',
-                    urgent_alert_method='block',
-                    urgent_border=["#E06C75","#E06C75"],
-                    this_current_screen_border=["#a151d3","#a151d3"],
-                    this_screen_border=["#ABB2BF","#ABB2BF"],
-                    other_current_screen_border=["#1e2127","#1e2127"],
-                    other_screen_border=["#1e2127","#1e2127"],
-                    disable_drag=True
+        top=bar.Bar([
+            widget.GroupBox(
+                background=["#51545a","#51545a"],
+                foreground=["#ffffff","#ffffff"],
+
+                font='UbuntuMono Nerd Font',
+                fontsize=25,
+
+                active=["ffffff","ffffff"],
+                inactive=["#1e2127","#1e2127"],
+
+                rounded=False,
+                highlight_method='text',
+                urgent_alert_method='block',
+
+                urgent_border=["#E06C75","#E06C75"],
+
+                this_current_screen_border=["#9DC0E3","#9DC0E3"],
+                #this_current_screen_border=["#2f3238","#5f656a"],
+                #this_current_screen_border=["#1e2127","#1e2127"],
+                this_screen_border=["#FFFFFF","#FFFFFF"],
+                #this_screen_border=["#ABB2BF","#ABB2BF"],
+
+                other_current_screen_border=["#1e2127","#1e2127"],
+                other_screen_border=["#1e2127","#1e2127"],
+
+                disable_drag=True
                 ),
-                widget.WindowName(
-                    background=["#1e2127","#1e2127"],
-                    #foreground=['#a151d3','#a151d3'],
-                    foreground=['#FF5555','#FF5555'],
-                    font='UbuntuMono Nerd Font',
+            widget.TextBox(
+                text=' ',
+                font = 'mononoki Nerd Font',
+                fontsize=50,
+                padding=-6,
+                background = ["#2f3238","#2f3238"], 
+                #foreground = ["#404349","#404349"],
+                #foreground = ["#2f3238","#2f3238"],
+                foreground = ["#51545a","#51545a"],
+            ),
+                
+            widget.Clipboard(
+                background=["#2f3238","#2f3238"],
+                foreground=['#D4E6DA','#D4E6DA'],
+                max_width=25,
+                font='mononoki Nerd Font',
+                fontsize= 20,
+                timeout= 40,
+                blacklist = '',
+                selection = 'PRIMARY'
+            ),
+            widget.Spacer(
+                background=["#2f3238","#2f3238"],
+            ),
+
+            widget.TextBox(
+                text=' ',
+                background=["#1e2127","#1e2127"],
+                font = 'mononoki Nerd Font',
+                fontsize = 35,
+                padding = -3,
+                foreground = ["#2f3238","#2f3238"]
+            ),
+
+            Mywidget.Hack(
+                background=["#1e2127","#1e2127"],
+                foreground=['#D4E6DA','#D4E6DA'],
+                func= prueba,
+                update_interval = 0.07,
+                font = 'HEAVYDATA Nerd Font ',
+                #font = 'mononoki Nerd Font',
+                fontsize = 25,
+
+            
+            ),
+            widget.TextBox(
+                text=' ',
+                #text=' ',
+                background=["#1e2127","#1e2127"],
+                font = 'mononoki Nerd Font',
+                fontsize = 40,
+                padding = -3,
+                foreground = ["#2f3238","#2f3238"]
+            ),
+            # widget.GenPollText(
+            #     background=["#1e2127","#1e2127"],
+            #     foreground=['#D4E6DA','#D4E6DA'],
+            #     func=prueba,
+            #     update_interval = 1
+            # ),
+
+            widget.Spacer(
+                background=["#2f3238","#2f3238"]
+            ),
+            widget.TextBox(
+                text='',
+                font = 'mononoki Nerd Font',
+                fontsize=50,
+                padding=-6,
+                background = ["#2f3238","#2f3238"], 
+                #foreground = ["#404349","#404349"],
+                #foreground = ["#2f3238","#2f3238"],
+                foreground = ["#51545a","#51545a"],
+            ),
+
+            widget.WidgetBox(
+                [
+                # widget.Net(
+                # background=["#1e2127","#1e2127"],
+                # foreground=['#D4E6DA','#D4E6DA'],
+                # font='mononoki Nerd Font',
+                # fontsize= 20,
+                # ),
+                widget.Battery(
+                    background=["#51545a","#51545a"],
+                    foreground=['#D4E6DA','#D4E6DA'],
+                    font='mononoki Nerd Font',
+                    fontsize= 20,
+                    battery= 0,
                 ),
 
-                widget.TextBox(
-                    text='',
-                    background=['#1e2127','#1e2127'],
-                    foreground=['#ffd47e','#ffd47e'],
-                    fontsize=43,
-                    padding=-3
+                widget.BatteryIcon(
+                    background=["#51545a","#51545a"],
+                    battery= 0,
                 ),
 
-                widget.TextBox(
-                    text=' ',
-                    background=['#ffd47e','#ffd47e'],
-                    foreground=['0f101a',"0f101a"],
-                    fontsize=18,
-                    padding=-3
-                ),
-                widget.CheckUpdates(
-                    background=['#ffd47e','#ffd47e'],
-                    colour_have_updates=['#0f101a','#0f101a'],
-                    colour_no_updates=['#0f101a','#0f101a'],
-                    no_update_string='0',
-                    display_format= "{updates}",
-                    update_interval=60,
-                    distro='Arch', 
-                    font='UbuntuMono Nerd Font',
-                    fontsize=18
-                ),
-                widget.TextBox(
-                    text='',
-                    background=['#ffd47e','#ffd47e'],
-                    foreground=['#fb9f7f','#fb9f7f'],
-                    fontsize=43,
-                    padding=-3
-                ),
-                widget.TextBox(
-                    text='  ',
-                    background=['#fb9f7f','#fb9f7f'],
-                    foreground=['0f101a',"0f101a"],
-                    fontsize=18,
-                    padding=-3
-                ),
-                widget.Net(
-                    foreground=['#0f101a','#0f101a'],
-                    background=['#fb9f7f','#fb9f7f'],
-                    interface='enp39s0',
-                    font='UbuntuMono Nerd Font'
-                ),
-                widget.TextBox(
-                    text=' ',
-                    background=['#fb9f7f','#fb9f7f'],
-                    foreground=['#F07178',"#F07178"],
-                    fontsize=43,
-                    padding=-3
-                ),
-
-                widget.CurrentLayoutIcon(
-                    background=['#F07178',"#F07178"],
-                    foreground=['#cbacff',"#eeffff"],
-                    font='UbuntuMono Nerd Font',
-                    scale=0.65
-                ),
-                widget.CurrentLayout(
-                    background=['#F07178',"#F07178"],
-                    foreground=['#0f101a',"#0f101a"],
-                    font='UbuntuMono Nerd Font',
-                    padding=10
-                ),
-                widget.TextBox(
-                    text='',
-                    background=['#F07178',"#F07178"],#b6f81c
-                    foreground=['#a151d3',"#a151d3"],
-                    fontsize=39,
-                    padding=-3
-                ),
-                widget.Chord(
-                    background=["#1e2127","#1e2127"],
-                    foreground=['#cbacff',"#eeffff"],
-                    chords_colors={
-                        'launch': ("#ff0000", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
-                    font='UbuntuMono Nerd Font'
-                ),
-                widget.TextBox(
-                    text=' ',
-                    background=["#a151d3","#a151d3"],
-                    foreground=['#0f101a',"#0f101a"],
-                    padding=5
-                ),
-                widget.Clock(
-                    background=["#a151d3","#a151d3"],
-                    foreground=['#0f101a',"#0f101a"],
-                    format='%d/%m/%Y - %H:%M',
-                    font='UbuntuMono Nerd Font'
-                ),
-                widget.TextBox(
-                    text='',
-                    background=["#a151d3","#a151d3"],
-                    foreground=["#1e2127","#1e2127"],
-                    fontsize=39,
-                    padding=-3
-                ),
-                widget.Systray(
-                    background=["#1e2127","#1e2127"],
-                    foreground=['#cbacff',"#eeffff"],
-                    font='UbuntuMono Nerd Font',
-                    padding=13
-                ),
-                widget.TextBox(
-                    text='',
-                    background=["#1e2127","#1e2127"],
-                    foreground=["#1e2127","#1e2127"],
-                    fontsize=40,
-                    padding=-3),
-                    
-            ],
-            26, opacity = 0.95
-        ),
-    ),
-    Screen(
-        top=bar.Bar(
-            [ 
-                widget.GroupBox(
-                    background=["#1e2127","#1e2127"],
-                    foreground=["#ffffff","#ffffff"],
-                    font='UbuntuMono Nerd Font',
-                    fontsize=19,
-                    active=["ccffff","ffffcc"],
-                    inactive=["#555555","#555555"],
-                    rounded=False,
-                    highlight_method='block',
-                    urgent_alert_method='block',
-                    urgent_border=["#E06C75","#E06C75"],
-                    this_current_screen_border=["#a151d3","#a151d3"],
-                    this_screen_border=["#ABB2BF","#ABB2BF"],
-                    other_current_screen_border=["#1e2127","#1e2127"],
-                    other_screen_border=["#1e2127","#1e2127"],
-                    disable_drag=True
-                ),
-                widget.WindowName(
-                    background=["#1e2127","#1e2127"],
-                    #foreground=['#a151d3','#a151d3'],
-                    foreground=['#FF5555','#FF5555'],
-                    font='UbuntuMono Nerd Font',
-                ),
-                widget.TextBox(
-                    text='|',
-                    background=["#1e2127","#1e2127"],
-                    foreground=["#1c82f8","#1c82f8"],
-                    fontsize=43,
-                    padding=-3
-                ),
-                widget.Clipboard(
-                    fmt='{}',
-                    max_width=25,
-                    background=["#a653a6","#a653a6"],
-                    foreground=["#1e2127","#1e2127"],
-                    font='UbuntuMono Nerd Font',
-                    fontsize= 18,
-                    timeout= 40,
-                    #max_chars=20
-                ),
-                widget.TextBox(
-                    text='|',
-                    background=["#1e2127","#1e2127"],
-                    foreground=["#1c82f8","#1c82f8"],
-                    fontsize=43,
-                    padding=-3
-                ),
-                widget.TextBox(
-                    text='',
-                    background=["#1e2127","#1e2127"],
-                    foreground=["#1c82f8","#1c82f8"],
-                    fontsize=43,
-                    padding=-3
-                ),
-                widget.TextBox(
-                    text='  ',
-                    foreground=["#1e2127","#1e2127"],
-                    background=["#1c82f8","#1c82f8"],
-                    fontsize=27,
-                    padding=-3
-                ),
                 widget.CPU(
-                    background=["#1c82f8","#1c82f8"],
-                    foreground=['#0f101a',"#0f101a"],
-                    font='UbuntuMono Nerd Font',
-                    fmt='{}',
+                background=["#51545a","#51545a"],
+                foreground=['#D4E6DA','#D4E6DA'],
+                font='mononoki Nerd Font',
+                fontsize= 20,
                 ),
 
-                widget.TextBox(
-                    text='',
-                    background=["#1c82f8","#1c82f8"],
-                    foreground=['#1cf8b9',"#1cf8b9"],
-                    fontsize=43,
-                    padding=-3
-                ),
-                widget.TextBox(
-                    text='  ',
-                    foreground=["#1e2127","#1e2127"],
-                    background=['#1cf8b9',"#1cf8b9"],
-                    fontsize=20,
-                    padding=-3
-                ),
                 widget.Memory(
-                    background=['#1cf8b9',"#1cf8b9"],
-                    foreground=['#0f101a',"#0f101a"],
-                    font='UbuntuMono Nerd Font',
-                ),
-                
-                widget.TextBox(
-                    text='',
-                    background=["#1cf8b9","#1cf8b9"],
-                    foreground=['#b6f81c','#b6f81c'],
-                    fontsize=43,
-                    padding=-3
+                background=["#51545a","#51545a"],
+                foreground=['#D4E6DA','#D4E6DA'],
+                font='mononoki Nerd Font',
+                fontsize= 20,
                 ),
 
-                widget.CurrentLayoutIcon(
-                    background=['#b6f81c','#b6f81c'],
-                    foreground=['#cbacff',"#eeffff"],
-                    font='UbuntuMono Nerd Font',
-                    scale=0.65
+                # widget.CPUGraph(
+                # background=["#1e2127","#1e2127"],
+                # foreground=['#D4E6DA','#D4E6DA'],
+                # font='mononoki Nerd Font',
+                # fontsize= 20,
+                # ),
+
+                widget.ThermalSensor(
+                    background=["#51545a","#51545a"],
+                    foreground=['#D4E6DA','#D4E6DA'],
+                    font='mononoki Nerd Font',
+                    fontsize= 20,
+                    battery= 0
                 ),
-                widget.CurrentLayout(
-                    background=['#b6f81c','#b6f81c'],
-                    foreground=['#0f101a',"#0f101a"],
-                    font='UbuntuMono Nerd Font',
-                    padding=10
+
+                ],
+                foreground=["#FFFFFF","#FFFFFF"],
+                background=["#51545a","#51545a"],#["#2f3238","#2f3238"],
+                font='mononoki Nerd Font',
+                fontsize= 20,
+                text_open= '  ',
+                text_closed= '  ',
+            ),
+
+            widget.CurrentLayoutIcon(
+                background=["#51545a","#51545a"],
+                foreground=["#FFFFFF","#FFFFFF"],
+                scale= 0.55
+            ),
+            
+            widget.CapsNumLockIndicator(
+                background=["#51545a","#51545a"],
+                foreground=["#FFFFFF","#FFFFFF"],
+                font='mononoki Nerd Font',
+                fontsize= 20,
+            ),
+
+            widget.Clock(
+                background=["#51545a","#51545a"],
+                foreground=["#FFFFFF","#FFFFFF"],
+                format='%H:%M',
+                font='mononoki Nerd Font',
+                fontsize = 20
                 ),
-                widget.TextBox(
-                    text='',
-                    foreground=['#1e2127',"#1e2127"],
-                    background=['#b6f81c','#b6f81c'],
-                    fontsize=36,
-                    padding=-3
-                ),
-                
-            ],
-            26, opacity = 0.95
+
+            widget.Systray(
+                background=["#51545a","#51545a"],
+                foreground=["#FFFFFF","#FFFFFF"],
+            ),
+
+
+
+        ],
+            33, opacity = 0.99
         ),
     ),
+
 ]
+
 
 # Drag floating layouts.
 mouse = [

@@ -1,2 +1,7 @@
 #!/bin/bash
-volumeicon &
+pulseaudio &
+picom &
+fondo &
+
+
+disown
