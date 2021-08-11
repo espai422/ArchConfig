@@ -1,5 +1,6 @@
 #!/bin/pyhton
 from typing import List  # noqa: F401
+from libqtile import qtile
 
 from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
@@ -9,11 +10,14 @@ import subprocess
 from time import sleep, time
 import random
 import Mywidget
+import widgetNet
 ##### My imports #####
 
 
 background = ["#1e2127","#1e2127"]
 foreground = ['#D4E6DA','#D4E6DA']
+
+audio = '/home/espai422/.config/qtile/scripts/volume.sh'
 
 
 try:
@@ -23,6 +27,8 @@ except:
 
 mod = "mod4"
 terminal = guess_terminal()
+myTerm = 'alacritty'
+
 
 keys = [
     # Switch between windows
@@ -65,8 +71,18 @@ keys = [
     Key([mod], "s", lazy.spawn("scrot")),
     Key([mod,"shift"], "s", lazy.spawn("flameshot")),
     Key([mod], "f", lazy.spawn("thunar")),
-]
 
+    Key([], "XF86AudioRaiseVolume", lazy.spawn(
+        "pactl set-sink-volume @DEFAULT_SINK@ +5%"
+    )),
+    Key([], "XF86AudioLowerVolume", lazy.spawn(
+        "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+    )),
+    Key([], "XF86AudioMute", lazy.spawn(
+        "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+    )),
+]
+# XF86AudioLowerVolume
 groups = [Group(i) for i in [" "," "," ", " ","", "שּׁ ", " "," "]]
 
 for i, group in enumerate(groups):
@@ -80,9 +96,9 @@ for i, group in enumerate(groups):
 
 
 layout_conf = {
-    'border_focus':'#666666',
+    'border_focus':'#2f3238',
     'border_width':1,
-    'margin':6
+    'margin':7
 }
 layout_conf2 = {
     'border_focus':'#00c0d9',
@@ -91,7 +107,7 @@ layout_conf2 = {
 }
 
 def prueba():
-    return str(random.randrange(300))
+    pass
 
 layouts = [
     #layout.Columns(**layout_conf,border_focus_stack='#d75f5f'),
@@ -125,7 +141,7 @@ screens = [
     Screen(
         top=bar.Bar([
             widget.GroupBox(
-                background=["#51545a","#51545a"],
+                background=["#62656b","#62656b"],
                 foreground=["#ffffff","#ffffff"],
 
                 font='UbuntuMono Nerd Font',
@@ -151,6 +167,28 @@ screens = [
 
                 disable_drag=True
                 ),
+
+            widget.TextBox(
+                text=' ',
+                font = 'mononoki Nerd Font',
+                fontsize=50,
+                padding=-6,
+                background = ["#62656b","#62656b"], 
+                #foreground = ["#404349","#404349"],
+                #foreground = ["#2f3238","#2f3238"],
+                foreground = ["#62656b","#62656b"],
+            ),
+
+            widget.Clipboard(
+                background=["#62656b","#62656b"],
+                foreground=['#D4E6DA','#D4E6DA'],
+                max_width=28,
+                font='mononoki Nerd Font',
+                fontsize= 23,
+                timeout= 40,
+                blacklist = '',
+            ),
+
             widget.TextBox(
                 text=' ',
                 font = 'mononoki Nerd Font',
@@ -159,19 +197,10 @@ screens = [
                 background = ["#2f3238","#2f3238"], 
                 #foreground = ["#404349","#404349"],
                 #foreground = ["#2f3238","#2f3238"],
-                foreground = ["#51545a","#51545a"],
+                foreground = ["#62656b","#62656b"],
             ),
-                
-            widget.Clipboard(
-                background=["#2f3238","#2f3238"],
-                foreground=['#D4E6DA','#D4E6DA'],
-                max_width=25,
-                font='mononoki Nerd Font',
-                fontsize= 20,
-                timeout= 40,
-                blacklist = '',
-                selection = 'PRIMARY'
-            ),
+            #255.255.255.255
+
             widget.Spacer(
                 background=["#2f3238","#2f3238"],
             ),
@@ -188,7 +217,6 @@ screens = [
             Mywidget.Hack(
                 background=["#1e2127","#1e2127"],
                 foreground=['#D4E6DA','#D4E6DA'],
-                func= prueba,
                 update_interval = 0.07,
                 font = 'HEAVYDATA Nerd Font ',
                 #font = 'mononoki Nerd Font',
@@ -220,56 +248,109 @@ screens = [
                 font = 'mononoki Nerd Font',
                 fontsize=50,
                 padding=-6,
+                #mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('pavucontrol')},
                 background = ["#2f3238","#2f3238"], 
                 #foreground = ["#404349","#404349"],
                 #foreground = ["#2f3238","#2f3238"],
-                foreground = ["#51545a","#51545a"],
+                foreground = ["#62656b","#62656b"],
             ),
-
+            # 墳 
             widget.WidgetBox(
                 [
-                # widget.Net(
-                # background=["#1e2127","#1e2127"],
-                # foreground=['#D4E6DA','#D4E6DA'],
-                # font='mononoki Nerd Font',
-                # fontsize= 20,
-                # ),
+                widgetNet.NetworkIP(
+                    font = 'mononoki Nerd Font',
+                    fontsize=23,
+                    update_interval = 5,
+                    foreground = ['#D4E6DA','#D4E6DA'], 
+                    background = ["#62656b","#62656b"],
+                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('nm-connection-editor')}
+                ),
+
+                widget.TextBox(
+                    text='',
+                    font = 'mononoki Nerd Font',
+                    fontsize=50,
+                    padding=-6,
+                    foreground = ["#2f3238","#2f3238"], 
+                    background = ["#62656b","#62656b"],),
+
+                widget.TextBox(
+                    text='墳 ',
+                    font = 'mononoki Nerd Font',
+                    fontsize=30,
+                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('pavucontrol')},
+                    background = ["#2f3238","#2f3238"], 
+                    foreground = ['#D4E6DA','#D4E6DA'],),
+
+                widget.PulseVolume(
+                    background=["#2f3238","#2f3238"],
+                    foreground=['#D4E6DA','#D4E6DA'],
+                    font='mononoki Nerd Font',
+                    fontsize= 20,
+                    step = 5,
+
+                ),
+                widget.TextBox(
+                    text='',
+                    font = 'mononoki Nerd Font',
+                    fontsize=50,
+                    padding=-6,
+                    background = ["#2f3238","#2f3238"], 
+                    foreground = ["#62656b","#62656b"],
+                ),
+                widget.TextBox(
+                    text='',
+                    font = 'mononoki Nerd Font',
+                    fontsize=30,
+                    background = ["#62656b","#62656b"], 
+                    foreground = ['#D4E6DA','#D4E6DA'],
+                ),
                 widget.Battery(
-                    background=["#51545a","#51545a"],
+                    background=["#62656b","#62656b"],
                     foreground=['#D4E6DA','#D4E6DA'],
                     font='mononoki Nerd Font',
                     fontsize= 20,
                     battery= 0,
                 ),
 
-                widget.BatteryIcon(
-                    background=["#51545a","#51545a"],
-                    battery= 0,
+
+                widget.TextBox(
+                    text='',
+                    font = 'mononoki Nerd Font',
+                    fontsize=50,
+                    padding=-6,
+                    foreground = ["#2f3238","#2f3238"], 
+                    background = ["#62656b","#62656b"],
                 ),
 
-                widget.CPU(
-                background=["#51545a","#51545a"],
-                foreground=['#D4E6DA','#D4E6DA'],
-                font='mononoki Nerd Font',
-                fontsize= 20,
+                widget.TextBox(
+                    text=' ',
+                    font = 'mononoki Nerd Font',
+                    fontsize=30,
+                    padding=2,
+                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('alacritty -e htop')},
+                    background = ["#2f3238","#2f3238"], 
+                    foreground = ['#D4E6DA','#D4E6DA'],
                 ),
 
-                widget.Memory(
-                background=["#51545a","#51545a"],
-                foreground=['#D4E6DA','#D4E6DA'],
-                font='mononoki Nerd Font',
-                fontsize= 20,
+                widget.Memory( # Hardcoded formatR
+                    background=["#2f3238","#2f3238"],
+                    foreground=['#D4E6DA','#D4E6DA'],
+                    font='mononoki Nerd Font',
+                    fontsize= 20,
                 ),
 
-                # widget.CPUGraph(
-                # background=["#1e2127","#1e2127"],
-                # foreground=['#D4E6DA','#D4E6DA'],
-                # font='mononoki Nerd Font',
-                # fontsize= 20,
-                # ),
+                widget.TextBox(
+                    text='',
+                    font = 'mononoki Nerd Font',
+                    fontsize=50,
+                    padding=-6,
+                    background = ["#2f3238","#2f3238"], 
+                    foreground = ["#62656b","#62656b"],
+                ),
 
                 widget.ThermalSensor(
-                    background=["#51545a","#51545a"],
+                    background=["#62656b","#62656b"],
                     foreground=['#D4E6DA','#D4E6DA'],
                     font='mononoki Nerd Font',
                     fontsize= 20,
@@ -278,7 +359,7 @@ screens = [
 
                 ],
                 foreground=["#FFFFFF","#FFFFFF"],
-                background=["#51545a","#51545a"],#["#2f3238","#2f3238"],
+                background=["#62656b","#62656b"],#["#2f3238","#2f3238"],
                 font='mononoki Nerd Font',
                 fontsize= 20,
                 text_open= '  ',
@@ -286,20 +367,20 @@ screens = [
             ),
 
             widget.CurrentLayoutIcon(
-                background=["#51545a","#51545a"],
+                background=["#62656b","#62656b"],
                 foreground=["#FFFFFF","#FFFFFF"],
                 scale= 0.55
             ),
             
             widget.CapsNumLockIndicator(
-                background=["#51545a","#51545a"],
+                background=["#62656b","#62656b"],
                 foreground=["#FFFFFF","#FFFFFF"],
                 font='mononoki Nerd Font',
                 fontsize= 20,
             ),
 
             widget.Clock(
-                background=["#51545a","#51545a"],
+                background=["#62656b","#62656b"],
                 foreground=["#FFFFFF","#FFFFFF"],
                 format='%H:%M',
                 font='mononoki Nerd Font',
@@ -307,14 +388,14 @@ screens = [
                 ),
 
             widget.Systray(
-                background=["#51545a","#51545a"],
+                background=["#62656b","#62656b"],
                 foreground=["#FFFFFF","#FFFFFF"],
             ),
 
 
 
         ],
-            33, opacity = 0.99
+            33, opacity = 0.9
         ),
     ),
 

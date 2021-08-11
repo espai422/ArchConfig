@@ -40,13 +40,36 @@ def text_generator():
 
 
 
-y = text_generator()
-x = Color_generator()
-from time import sleep
-for i in y:
-    print(i)
-    sleep(0.01)
-# x = 6
-# y = f'0{hex(x)[2:]}'[-2:]
-# print(y)
-print(contador)
+# import subprocess
+# sp = subprocess.Popen(['ifconfig'], stdout=subprocess.PIPE)
+
+# output, _ = sp.communicate()
+# output = output.split('')
+# print (output)
+
+import psutil
+class Interfaces():
+
+    def get_data(self):
+        data = psutil.net_if_addrs()
+        return data
+    
+    def get_interfaces(self):
+        data = self.get_data()
+        return [interface for interface in data]
+
+    def get_interfaces_info(self):
+        data = self.get_data()
+        interfaces = self.get_interfaces()
+
+        for interface in interfaces:
+            
+            iface_info = data[interface][0][1]
+
+            if '.' in iface_info and iface_info != '127.0.0.1':
+
+                return iface_info
+
+x = Interfaces()
+
+print(x.get_interfaces_info())

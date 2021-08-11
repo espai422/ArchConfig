@@ -1,5 +1,4 @@
 #!/bin/bash
-pulseaudio &
 picom &
 fondo &
 
