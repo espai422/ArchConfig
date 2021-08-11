@@ -37,7 +37,7 @@ class CPU(base.ThreadPoolText):
         ("update_interval", 1.0, "Update interval for the CPU widget"),
         (
             "format",
-            "CPU {freq_current}GHz {load_percent}%",
+            "{load_percent}%",
             "CPU display format",
         ),
     ]

@@ -49,7 +49,8 @@ class Memory(base.ThreadPoolText):
 
     orientations = base.ORIENTATION_HORIZONTAL
     defaults = [
-        ("format", "{MemUsed: .0f}{mm}/{MemTotal: .0f}{mm}", "Formatting for field names."),
+        #("format", "{MemUsed: .0f}{mm}/{MemTotal: .0f}{mm}", "Formatting for field names."),
+        ("format", "{MemUsed: .0f}{mm}", "Formatting for field names."),
         ("update_interval", 1.0, "Update interval for the Memory"),
         ("measure_mem", "M", "Measurement for Memory (G, M, K, B)"),
         ("measure_swap", "M", "Measurement for Swap (G, M, K, B)"),
